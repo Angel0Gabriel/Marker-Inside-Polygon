@@ -31,36 +31,22 @@ function App() {
     });
 
     map.on(L.Draw.Event.CREATED, function (geometry) {
-      
+
       let markers = [];
-      
+
       map.eachLayer((layer) => {
         if (layer instanceof L.Marker) {
           markers.push(layer);
-          
+
         }
-        
+
       });
-      
-      function jsonToArray(jsonObject) {
-        var result = [];
-        var keys = Object.keys(jsonObject);
-        keys.forEach(function (key) {
-          result.push(jsonObject[key]);
-        });
-        return result;
-      }
-      
+
       var result = geometry.layer.contains(markers);
-      
-      const markersPosition = markers.map((marker) => {
-        marker.getLatLng();
-      })
 
-      setMarkersIn(markersPosition.filter((marker, index) => {
-        result[index];
-      }))
+      const markersPosition = markers.map(marker => marker.getLatLng())
 
+      setMarkersIn(markersPosition.filter((marker, index) => { return result[index] }))
     });
 
   }
@@ -68,11 +54,8 @@ function App() {
   console.log(markersIn);
 
   const onCreated = e => {
-    console.log(e.layer.getLatLngs());
+    // console.log(e.layer.getLatLngs());
   };
-
-
-
 
   return (
     <>
@@ -87,6 +70,8 @@ function App() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+        <Teste />
+
         <FeatureGroup>
           <EditControl
             draw={{
@@ -101,12 +86,9 @@ function App() {
           />
         </FeatureGroup>
 
-        <Teste />
 
-        <LayerGroup>
-          <Marker position={[-3.758402527194762, -38.54604721069337]}></Marker>
-          {/* <Marker position={[-3.7092402896704764, -38.54604721069337]}></Marker> */}
-        </LayerGroup>
+        <Marker position={[-3.758402527194762, -38.54604721069337]}></Marker>
+        {/* <Marker position={[-3.7092402896704764, -38.54604721069337]}></Marker> */}
       </MapContainer>
     </>
   )
